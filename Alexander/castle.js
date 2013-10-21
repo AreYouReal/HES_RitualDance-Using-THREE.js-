@@ -6,12 +6,21 @@ var FOVY = 45, ASPECT = WIDTH / HEIGHT,
 var renderer;
 var camera;
 var scene;
-var sphere, cube, plane;
+var sphere, plane;
 var pointLight;
 var sphereMatrix;
 var rotateAngle = 0.1;
 
 var cubicMan;
+
+var leftHand, rightHand, leftLeg, rightLeg, head;
+
+var limbAngle = 0;
+var increase = true;
+
+var cubicManPosition = [0, 0, 0];
+
+var circleAngle = 0;
 
 window.onload = function init(){
 
@@ -34,18 +43,16 @@ window.onload = function init(){
 
     // create sphere's material
     sphere = createSphere();
-    cube = createCube();
-    cube.position.x = 150;
+    sphere.position.set(-200, 300, 0);
     plane = createPlane();
 
     var planeMatrix = new THREE.Matrix4();
     planeMatrix.makeScale(5, 5, 1);
     planeMatrix.makeRotationX(- Math.PI / 4);
 
-    plane.position.y = - 100;
+    plane.position.y = - 200;
     plane.rotateX(-Math.PI / 2);
-    plane.scale.set(10, 10, 1);
-
+    plane.scale.set(20, 20, 1);
 
 
     cubicMan = createCubicMan();
@@ -54,14 +61,15 @@ window.onload = function init(){
     // add the sphere to the scene
     scene.add(plane);
     scene.add(sphere);
-    scene.add(cube);
     scene.add(cubicMan);
     // add the camera to the scene
     scene.add(camera);
 
-    pointLight = createPointLight(10, 20, 100);
+    pointLight = createPointLight(-200, 300, 200);
 
     scene.add(pointLight);
+
+    document.onkeydown = function(){keyCatch(window.event.keyCode)};
 
     // draw!
     update();
@@ -70,7 +78,7 @@ window.onload = function init(){
 
 function createCube(){
     var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xFFFF00});
-    return new THREE.Mesh(new THREE.CubeGeometry(100, 100, 100), cubeMaterial);
+    return new THREE.Mesh(new THREE.CubeGeometry(100, 100, 50), cubeMaterial);
 }
 
 function createSphere(){
@@ -98,16 +106,97 @@ function draw(){
 function update(){
     setTimeout(function(){requestAnimationFrame(update)}, 50);
     sphere.rotateX(rotateAngle);
-    cube.rotateY(rotateAngle);
-    cubicMan.rotateZ(rotateAngle);
+
+
+    //cubicMan.rotateZ(rotateAngle);
+    if(increase){
+        rightHand.rotateX(rotateAngle);
+        leftHand.rotateX(-rotateAngle);
+        rightLeg.rotateX(-rotateAngle);
+        leftLeg.rotateX(rotateAngle);
+        head.rotateX(rotateAngle);
+    }else{
+        rightHand.rotateX(-rotateAngle);
+        leftHand.rotateX(rotateAngle);
+        rightLeg.rotateX(rotateAngle);
+        leftLeg.rotateX(-rotateAngle);
+        head.rotateX(-rotateAngle);
+    }
+
+    if(limbAngle > Math.PI / 4)
+        increase = false;
+    if(limbAngle < -Math.PI / 4)
+        increase = true;
+
+    if(increase){
+        limbAngle += 0.1;
+    }else{
+        limbAngle -= 0.1;
+    }
+
+
+    cubicManPosition[0] = 200 * Math.cos(circleAngle);
+    cubicManPosition[1] = 200 * Math.sin(circleAngle);
+    circleAngle -= 0.1;
+
+    cubicMan.position.x = cubicManPosition[0];
+    cubicMan.position.z = cubicManPosition[1];
+
+    cubicMan.rotateY(rotateAngle);
 }
 
 
 function createCubicMan(){
     var cubeMan = new THREE.Object3D();
     cubeMan.add(createCube());
-    cubeMan.position.x = - 150;
+
+    leftHand = createHand(true);
+    cubeMan.add(leftHand);
+    rightHand = createHand(false);
+    cubeMan.add(rightHand);
+
+
+    leftLeg = createLeg(true);
+    cubeMan.add(leftLeg);
+    rightLeg = createLeg(false);
+    cubeMan.add(rightLeg);
+
+    head = createSphere();
+    head.material = (new THREE.MeshLambertMaterial({color: 0x00FFFF}))
+    head.position.y = 100;
+
+    cubeMan.add(head);
+
+    cubeMan.position.x = cubicManPosition[0];
+
     return cubeMan;
+}
+
+
+function createHand(left){
+    var hand = new THREE.Object3D();
+    var tempCube = createCube();
+    if(left)
+        tempCube.position.x = -60;
+    else
+        tempCube.position.x = 60;
+    tempCube.position.y = -5;
+    tempCube.scale.set(0.2, 1.1, 0.7);
+    hand.add(tempCube);
+    return hand;
+}
+
+function createLeg(left){
+    var leg = new THREE.Object3D();
+    var tempCube = createCube();
+    if(left)
+        tempCube.position.x = -25;
+    else
+        tempCube.position.x = 25;
+    tempCube.position.y = -100;
+    tempCube.scale.set(0.3, 1, 1);
+    leg.add(tempCube);
+    return leg;
 }
 
 function createPlane(){
@@ -117,6 +206,30 @@ function createPlane(){
     var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
     return new THREE.Mesh(new THREE.PlaneGeometry(100, 100), planeMaterial);
 }
+
+function keyCatch(keyCode){
+    switch(window.event.keyCode){
+        case 37:
+            console.log("left");
+            camera.position.x -= 10;
+            break;
+        case 38:
+            console.log("up");
+            camera.position.y += 10;
+            break;
+        case 39:
+            console.log("right");
+            camera.position.x += 10;
+            break;
+        case 40:
+            console.log("down");
+            camera.position.y -= 10;
+            break;
+    }
+}
+
+
+
 
 
 
