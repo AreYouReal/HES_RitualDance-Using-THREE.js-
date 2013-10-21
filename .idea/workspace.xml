@@ -4,7 +4,7 @@
     <list default="true" id="792231b7-5580-406d-942a-d57a8d465cdb" name="Default" comment="" />
     <ignored path="TheLostCastle.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/rdance.js" changelist="792231b7-5580-406d-942a-d57a8d465cdb" time="1382365958120" ignored="false" />
+    <file path="/rdance.js" changelist="792231b7-5580-406d-942a-d57a8d465cdb" time="1382367697892" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +27,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Alexander/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="38" selection-start="15" selection-end="15" vertical-scroll-proportion="-0.0">
+            <state line="10" column="53" selection-start="252" selection-end="252" vertical-scroll-proportion="-7.096774">
               <folding />
             </state>
           </provider>
@@ -36,9 +36,10 @@
       <file leaf-file-name="rdance.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Alexander/rdance.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="168" column="63" selection-start="4479" selection-end="4479" vertical-scroll-proportion="0.35822636">
+            <state line="26" column="30" selection-start="523" selection-end="523" vertical-scroll-proportion="0.52380955">
               <folding>
-                <element signature="n#!!block;n#createLeg#0" expanded="false" />
+                <element signature="n#!!block;n#createPointLight#0" expanded="false" />
+                <element signature="n#!!block;n#createFlyingRobot#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -92,6 +93,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -130,7 +132,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -177,7 +178,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19312009" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14906457" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -267,7 +268,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="93" column="53" selection-start="2010" selection-end="2010" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#!!block;n#createLeg#0" expanded="false" />
+            <element signature="n#!!block;n#createPointLight#0" expanded="false" />
+            <element signature="n#!!block;n#createFlyingRobot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -283,7 +285,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="74" column="22" selection-start="1555" selection-end="1555" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#!!block;n#createLeg#0" expanded="false" />
+            <element signature="n#!!block;n#createPointLight#0" expanded="false" />
+            <element signature="n#!!block;n#createFlyingRobot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -299,7 +302,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="71" column="33" selection-start="1796" selection-end="1796" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#!!block;n#createLeg#0" expanded="false" />
+            <element signature="n#!!block;n#createPointLight#0" expanded="false" />
+            <element signature="n#!!block;n#createFlyingRobot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -315,7 +319,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="23" selection-start="375" selection-end="375" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#!!block;n#createLeg#0" expanded="false" />
+            <element signature="n#!!block;n#createPointLight#0" expanded="false" />
+            <element signature="n#!!block;n#createFlyingRobot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -331,7 +336,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="54" column="1" selection-start="1280" selection-end="1280" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#!!block;n#createLeg#0" expanded="false" />
+            <element signature="n#!!block;n#createPointLight#0" expanded="false" />
+            <element signature="n#!!block;n#createFlyingRobot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -347,7 +353,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="0" selection-start="42" selection-end="42" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#!!block;n#createLeg#0" expanded="false" />
+            <element signature="n#!!block;n#createPointLight#0" expanded="false" />
+            <element signature="n#!!block;n#createFlyingRobot#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -357,13 +364,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Alexander/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="38" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Common/three.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26684" column="4" selection-start="576339" selection-end="576339" vertical-scroll-proportion="0.33256617">
@@ -371,11 +371,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Alexander/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="53" selection-start="252" selection-end="252" vertical-scroll-proportion="-7.096774">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Alexander/rdance.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="63" selection-start="4479" selection-end="4479" vertical-scroll-proportion="0.35822636">
+        <state line="26" column="30" selection-start="523" selection-end="523" vertical-scroll-proportion="0.52380955">
           <folding>
-            <element signature="n#!!block;n#createLeg#0" expanded="false" />
+            <element signature="n#!!block;n#createPointLight#0" expanded="false" />
+            <element signature="n#!!block;n#createFlyingRobot#0" expanded="false" />
           </folding>
         </state>
       </provider>
