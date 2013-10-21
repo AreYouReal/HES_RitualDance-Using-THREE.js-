@@ -7,11 +7,9 @@ var renderer;
 var camera;
 var scene;
 var sphere, plane;
-var pointLight;
+var pointLight, pointLight_2;
 var sphereMatrix;
 var rotateAngle = 0.1;
-
-
 
 var cubicMan;
 var leftHand, rightHand, leftLeg, rightLeg, head;
@@ -22,12 +20,7 @@ var cubicManPosition = [0, 0, 0];
 
 var circleAngle = 0;
 
-
-
-
-
 var flyingRobot;
-
 var roboRotor = new THREE.Object3D();
 var secondRoboRotor = new THREE.Object3D();
 
@@ -52,22 +45,14 @@ window.onload = function init(){
     $container.append(renderer.domElement);
 
     // create sphere's material
-    sphere = createSphere();
+    sphere = createSphere(50, 16, 16);
     sphere.position.set(-200, 300, 0);
     plane = createPlane();
 
-    var planeMatrix = new THREE.Matrix4();
-    planeMatrix.makeScale(5, 5, 1);
-    planeMatrix.makeRotationX(- Math.PI / 4);
 
-    plane.position.y = - 200;
-    plane.rotateX(-Math.PI / 2);
-    plane.scale.set(20, 20, 1);
 
 
     cubicMan = createCubicMan();
-
-
     flyingRobot = createFlyingRobot();
 
     // add the sphere to the scene
@@ -80,7 +65,10 @@ window.onload = function init(){
 
     pointLight = createPointLight(-200, 300, 200);
 
-    scene.add(pointLight);
+    pointLight_2 = createPointLight(0, 0, 0);
+
+    //scene.add(pointLight);
+    scene.add(pointLight_2);
 
     document.onkeydown = function(){keyCatch(window.event.keyCode)};
 
@@ -90,16 +78,15 @@ window.onload = function init(){
 };
 
 function createCube(){
-    var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xFFFF00});
+    var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
     return new THREE.Mesh(new THREE.CubeGeometry(100, 100, 50), cubeMaterial);
 }
 
-function createSphere(){
+
+function createSphere(radius, segments, rings){
     sphereMatrix = new THREE.Matrix4();
     sphereMatrix.makeRotationX(rotateAngle);
-
     var sphereMaterial = new THREE.MeshLambertMaterial({color: 0xCC0000});
-    var radius = 50, segments = 16, rings = 16;
     return new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), sphereMaterial);
 }
 
@@ -158,36 +145,34 @@ function update(){
 
     roboRotor.rotateY(rotateAngle);
     secondRoboRotor.rotateY(-rotateAngle);
+    flyingRobot.position.x = 500 * Math.cos(-circleAngle);
+    flyingRobot.position.z = 300 * Math.sin(-circleAngle);
+    flyingRobot.position.y = 100 * Math.sin(2 * circleAngle) + 500;
+    pointLight_2.position.x = flyingRobot.position.x;
+    pointLight_2.position.z = flyingRobot.position.z;
+    pointLight_2.position.y = flyingRobot.position.y;
 }
 
-
+// Create cubicMan
 function createCubicMan(){
     var cubeMan = new THREE.Object3D();
     cubeMan.add(createCube());
-
     leftHand = createHand(true);
     cubeMan.add(leftHand);
     rightHand = createHand(false);
     cubeMan.add(rightHand);
-
-
     leftLeg = createLeg(true);
     cubeMan.add(leftLeg);
     rightLeg = createLeg(false);
     cubeMan.add(rightLeg);
-
-    head = createSphere();
-    head.material = (new THREE.MeshLambertMaterial({color: 0x00FFFF}))
+    head = createSphere(50, 16, 16);
+    head.material = (new THREE.MeshLambertMaterial({color: 0xFFFFFF}))
     head.position.y = 100;
-
     cubeMan.add(head);
-
-    cubeMan.position.x = cubicManPosition[0];
-
     return cubeMan;
 }
 
-
+// Creates cubicMan hands (left and right)
 function createHand(left){
     var hand = new THREE.Object3D();
     var tempCube = createCube();
@@ -200,7 +185,7 @@ function createHand(left){
     hand.add(tempCube);
     return hand;
 }
-
+// Creates cubicMan legs (left and right)
 function createLeg(left){
     var leg = new THREE.Object3D();
     var tempCube = createCube();
@@ -214,12 +199,21 @@ function createLeg(left){
     return leg;
 }
 
+// Creates plane cubicMan running on.
 function createPlane(){
-    var planeTexture = new THREE.ImageUtils.loadTexture('roughgrass1.jpg');
+    var planeTexture = new THREE.ImageUtils.loadTexture('/roughgrass1.jpg');
+    var planeMaterial = new THREE.MeshLambertMaterial({color: 0x334411});
     planeTexture.wrapT = planeTexture.wrapS = THREE.RepeatWrapping;
     planeTexture.repeat.set(10, 10);
-    var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
-    return new THREE.Mesh(new THREE.PlaneGeometry(100, 100), planeMaterial);
+    //var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
+    var tempPlane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), planeMaterial);
+    var planeMatrix = new THREE.Matrix4();
+    planeMatrix.makeScale(5, 5, 1);
+    planeMatrix.makeRotationX(- Math.PI / 4);
+    tempPlane.position.y = - 200;
+    tempPlane.rotateX(-Math.PI / 2);
+    tempPlane.scale.set(20, 20, 1);
+    return tempPlane;
 }
 
 function createFlyingRobot(){
@@ -241,11 +235,19 @@ function createFlyingRobot(){
     var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(10, 10, 150), bladeMaterial);
     cylinder.position.y = -75;
 
-    var robot = new THREE.Object3D();
+    var bulbMaterial = new THREE.MeshLambertMaterial({color: 0xFFFFFF, opacity: 1});
+    bulbMaterial.emissive = new THREE.Color( 0xCC00ff );
+    var bulb = createSphere(50, 16, 16);
+    bulb.position.y = -175;
+    bulb.material = bulbMaterial;
 
+    var robot = new THREE.Object3D();
     robot.add(roboRotor);
     robot.add(cylinder);
     robot.add(secondRoboRotor);
+    robot.add(bulb);
+
+    robot.position.y = 500;
     return robot;
 }
 
