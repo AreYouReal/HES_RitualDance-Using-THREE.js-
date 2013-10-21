@@ -98,11 +98,13 @@ function createPointLight(x, y, z){
     return pointLight;
 }
 
+// Draw all objects
 function draw(){
     renderer.render(scene, camera);
     setTimeout(function(){requestAnimationFrame(draw)}, 100);
 }
 
+// Update object on the scene
 function update(){
     setTimeout(function(){requestAnimationFrame(update)}, 50);
     sphere.rotateX(rotateAngle);
@@ -142,11 +144,11 @@ function update(){
 
     cubicMan.rotateY(rotateAngle);
 
-    roboRotor.rotateY(rotateAngle);
-    secondRoboRotor.rotateY(-rotateAngle);
-    flyingRobot.position.x = 500 * Math.cos(-circleAngle);
-    flyingRobot.position.z = 300 * Math.sin(-circleAngle);
-    flyingRobot.position.y = 100 * Math.sin(2 * circleAngle) + 500;
+    roboRotor.rotateY(3 * rotateAngle);
+    secondRoboRotor.rotateY(-rotateAngle * 3);
+    flyingRobot.position.x = 500 * Math.cos(-0.5 * circleAngle);
+    flyingRobot.position.z = 300 * Math.sin(-0.5 * circleAngle);
+    flyingRobot.position.y = 100 * Math.sin(circleAngle) + 500;
     pointLight_2.position.x = flyingRobot.position.x;
     pointLight_2.position.z = flyingRobot.position.z;
     pointLight_2.position.y = flyingRobot.position.y;
@@ -203,10 +205,10 @@ function createLeg(left){
 // Creates plane cubicMan running on.
 function createPlane(){
     var planeTexture = new THREE.ImageUtils.loadTexture('roughgrass1.jpg');
-    var planeMaterial = new THREE.MeshLambertMaterial({color: 0x334411});
+    //var planeMaterial = new THREE.MeshLambertMaterial({color: 0x334411});
     planeTexture.wrapT = planeTexture.wrapS = THREE.RepeatWrapping;
     planeTexture.repeat.set(10, 10);
-    //var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
+    var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
     var tempPlane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), planeMaterial);
     tempPlane.position.y = - 150;
     tempPlane.rotateX(-Math.PI / 2);
