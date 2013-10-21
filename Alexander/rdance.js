@@ -205,10 +205,10 @@ function createLeg(left){
 // Creates plane cubicMan running on.
 function createPlane(){
     var planeTexture = new THREE.ImageUtils.loadTexture('roughgrass1.jpg');
-    //var planeMaterial = new THREE.MeshLambertMaterial({color: 0x334411});
+    var planeMaterial = new THREE.MeshLambertMaterial({color: 0x334411});
     planeTexture.wrapT = planeTexture.wrapS = THREE.RepeatWrapping;
     planeTexture.repeat.set(10, 10);
-    var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
+    //var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
     var tempPlane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), planeMaterial);
     tempPlane.position.y = - 150;
     tempPlane.rotateX(-Math.PI / 2);
