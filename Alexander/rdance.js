@@ -11,16 +11,25 @@ var pointLight;
 var sphereMatrix;
 var rotateAngle = 0.1;
 
+
+
 var cubicMan;
-
 var leftHand, rightHand, leftLeg, rightLeg, head;
-
 var limbAngle = 0;
 var increase = true;
 
 var cubicManPosition = [0, 0, 0];
 
 var circleAngle = 0;
+
+
+
+
+
+var flyingRobot;
+
+var roboRotor = new THREE.Object3D();
+var secondRoboRotor = new THREE.Object3D();
 
 window.onload = function init(){
 
@@ -34,6 +43,7 @@ window.onload = function init(){
 
     // camera starts at [0, 0, 0] so move it
     camera.position.z = 1000;
+    camera.position.y = 200;
 
     // start the renderer
     renderer.setSize(WIDTH, HEIGHT);
@@ -58,10 +68,13 @@ window.onload = function init(){
     cubicMan = createCubicMan();
 
 
+    flyingRobot = createFlyingRobot();
+
     // add the sphere to the scene
     scene.add(plane);
     scene.add(sphere);
     scene.add(cubicMan);
+    scene.add(flyingRobot);
     // add the camera to the scene
     scene.add(camera);
 
@@ -107,7 +120,6 @@ function update(){
     setTimeout(function(){requestAnimationFrame(update)}, 50);
     sphere.rotateX(rotateAngle);
 
-
     //cubicMan.rotateZ(rotateAngle);
     if(increase){
         rightHand.rotateX(rotateAngle);
@@ -143,6 +155,9 @@ function update(){
     cubicMan.position.z = cubicManPosition[1];
 
     cubicMan.rotateY(rotateAngle);
+
+    roboRotor.rotateY(rotateAngle);
+    secondRoboRotor.rotateY(-rotateAngle);
 }
 
 
@@ -206,6 +221,35 @@ function createPlane(){
     var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
     return new THREE.Mesh(new THREE.PlaneGeometry(100, 100), planeMaterial);
 }
+
+function createFlyingRobot(){
+    var bladeMaterial = new THREE.MeshLambertMaterial({color: 0xCC00FF});
+    var sphere = new THREE.Mesh(new THREE.SphereGeometry(20, 16, 16), bladeMaterial);
+    roboRotor.add(sphere);
+
+    for(var i = 0; i < 6; i++){
+        var blade = new THREE.Mesh(new THREE.CubeGeometry(20, 5, 115), bladeMaterial);
+        blade.rotateY(Math.PI * 2 / 6 * i);
+        blade.position.z = 75 * Math.cos(Math.PI * 2 / 6 * i);
+        blade.position.x = 75 * Math.sin(Math.PI * 2 / 6 * i);
+        roboRotor.add(blade);
+    }
+
+    secondRoboRotor = roboRotor.clone();
+    secondRoboRotor.position.y = - 75;
+
+    var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(10, 10, 150), bladeMaterial);
+    cylinder.position.y = -75;
+
+    var robot = new THREE.Object3D();
+
+    robot.add(roboRotor);
+    robot.add(cylinder);
+    robot.add(secondRoboRotor);
+    return robot;
+}
+
+
 
 function keyCatch(keyCode){
     switch(window.event.keyCode){
