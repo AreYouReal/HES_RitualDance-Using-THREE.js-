@@ -25,6 +25,10 @@ var flyingRobot;
 var roboRotor = new THREE.Object3D();
 var secondRoboRotor = new THREE.Object3D();
 
+var mouseDown = false;
+var prevX = -1, prevY = -1;
+var prevLookat = new THREE.Vector3();
+
 window.onload = function init(){
 
     var $container = $('#container');
@@ -69,6 +73,28 @@ window.onload = function init(){
     scene.add(pointLight_2);
 
     document.onkeydown = function(){keyCatch(window.event.keyCode)};
+
+    container.addEventListener("mousedown", function(){
+        console.log("mousedown");
+        mouseDown = true;
+    });
+
+    container.addEventListener("mouseup", function(){
+        console.log("mouseup");
+        mouseDown = false;
+    });
+
+    container.addEventListener("mousemove", function(){
+        if(mouseDown){
+            if(prevX != -1 && prevY != -1){
+                var difVec = new THREE.Vector3((event.clientX - prevX), -(event.clientY - prevY), 0);
+                prevLookat = prevLookat.add(difVec);
+                camera.lookAt(prevLookat);
+            }
+            prevX = event.clientX;
+            prevY = event.clientY;
+        }
+    });
 
     // draw!
     update();
@@ -205,10 +231,10 @@ function createLeg(left){
 // Creates plane cubicMan running on.
 function createPlane(){
     var planeTexture = new THREE.ImageUtils.loadTexture('roughgrass1.jpg');
-    var planeMaterial = new THREE.MeshLambertMaterial({color: 0x334411});
+    //var planeMaterial = new THREE.MeshLambertMaterial({color: 0x334411});
     planeTexture.wrapT = planeTexture.wrapS = THREE.RepeatWrapping;
     planeTexture.repeat.set(10, 10);
-    //var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
+    var planeMaterial = new THREE.MeshBasicMaterial({map: planeTexture});
     var tempPlane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), planeMaterial);
     tempPlane.position.y = - 150;
     tempPlane.rotateX(-Math.PI / 2);
